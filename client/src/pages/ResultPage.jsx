@@ -42,7 +42,7 @@ function ResultPage({ user }) {
         <h1>Game Over</h1>
 
         <h3 className="text-danger">
-          Wrong Route or Time Expired
+          Disconnected or Time Expired
         </h3>
 
         <p>
