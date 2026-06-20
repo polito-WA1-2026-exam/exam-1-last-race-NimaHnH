@@ -11,6 +11,9 @@ function ResultPage({ user }) {
     return <p>No result available</p>;
   }
 
+  const finalScore =
+    Math.max(0, game.finalCoins);
+
   const saveResult = async () => {
 
     const response = await fetch(
@@ -22,7 +25,7 @@ function ResultPage({ user }) {
         },
         body: JSON.stringify({
           username: user?.username,
-          score: game.finalCoins
+          score: finalScore
         })
       }
     );
@@ -33,7 +36,7 @@ function ResultPage({ user }) {
 
   };
 
-  if (game.finalCoins === 0) {
+  if (finalScore === 0) {
 
     return (
 
@@ -84,7 +87,7 @@ function ResultPage({ user }) {
       </p>
 
       <p>
-        Final Coins: <b>{game.finalCoins}</b>
+        Final Coins: <b>{finalScore}</b>
       </p>
 
       <button

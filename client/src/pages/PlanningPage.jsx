@@ -77,35 +77,38 @@ function PlanningPage({ game, setGame }) {
 
   };
 
-  function isConnectedRoute(
-    route,
-    startStation,
-    destinationStation
-  ) {
+function isConnectedRoute(
+  route,
+  startStation,
+  destinationStation
+) {
 
-    let current = startStation;
+  if (route.length === 0)
+    return false;
 
-    const visited = [];
+  let current = startStation;
 
-    while (current !== destinationStation) {
+  const remaining = [...route];
 
-      const nextSegment =
-        route.find(
-          s =>
-            s.station1 === current &&
-            !visited.includes(s.id)
-        );
+  while (remaining.length > 0) {
 
-      if (!nextSegment)
-        return false;
+    const index = remaining.findIndex(
+      s =>
+        s.station1 === current
+    );
 
-      visited.push(nextSegment.id);
+    if (index === -1)
+      break;
 
-      current = nextSegment.station2;
-    }
+    current =
+      remaining[index].station2;
 
-    return true;
+    remaining.splice(index, 1);
+
   }
+
+  return current === destinationStation;
+}
 
   return (
     <div className="container mt-5">
@@ -129,7 +132,68 @@ function PlanningPage({ game, setGame }) {
       </h3>
 
       <hr />
+<h3>Metro Stations</h3>
 
+<div
+  style={{
+    display: 'grid',
+    gridTemplateColumns: 'repeat(4, 1fr)',
+    gap: '12px',
+    marginBottom: '20px'
+  }}
+>
+
+  <div className="border p-2 rounded text-center">
+    Porta Nuova
+  </div>
+
+  <div className="border p-2 rounded text-center">
+    Porta Susa
+  </div>
+
+  <div className="border p-2 rounded text-center">
+    Politecnico
+  </div>
+
+  <div className="border p-2 rounded text-center">
+    Lingotto
+  </div>
+
+  <div className="border p-2 rounded text-center">
+    Dante
+  </div>
+
+  <div className="border p-2 rounded text-center">
+    Bernini
+  </div>
+
+  <div className="border p-2 rounded text-center">
+    Massaua
+  </div>
+
+  <div className="border p-2 rounded text-center">
+    Rivoli
+  </div>
+
+  <div className="border p-2 rounded text-center">
+    Re Umberto
+  </div>
+
+  <div className="border p-2 rounded text-center">
+    Nizza
+  </div>
+
+  <div className="border p-2 rounded text-center">
+    Carducci
+  </div>
+
+  <div className="border p-2 rounded text-center">
+    Spezia
+  </div>
+
+</div>
+
+<hr />
       <p>Available Segments</p>
 
       <ul>
@@ -179,7 +243,15 @@ function PlanningPage({ game, setGame }) {
 
             return;
           }
+if (selected.length < 3) {
 
+  alert(
+    'Route must contain at least 3 segments'
+  );
+
+  return;
+
+}
           setGame({
             ...game,
             route: selected

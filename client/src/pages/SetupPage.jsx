@@ -6,7 +6,7 @@ function SetupPage({ game, setGame }) {
 
   const navigate = useNavigate();
 
-  const [seconds, setSeconds] = useState(10);
+ 
 
   useEffect(() => {
 
@@ -20,27 +20,6 @@ function SetupPage({ game, setGame }) {
 
   }, [game, setGame]);
 
-  useEffect(() => {
-
-    if (!game)
-      return;
-
-    if (seconds === 0) {
-
-      navigate('/planning');
-
-      return;
-    }
-
-    const timer = setTimeout(() => {
-
-      setSeconds(seconds - 1);
-
-    }, 1000);
-
-    return () => clearTimeout(timer);
-
-  }, [seconds, game, navigate]);
 
   if (!game)
     return <p>Loading...</p>;
@@ -79,14 +58,6 @@ function SetupPage({ game, setGame }) {
 
 
 <hr />
-
-      <h4>
-        Memorize the map!
-      </h4>
-
-      <h2>
-        {seconds}
-      </h2>
 
       <button
         className="btn btn-success"

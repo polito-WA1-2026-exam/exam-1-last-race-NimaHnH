@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-
+import InstructionsPage from './pages/InstructionsPage';
 import LoginPage from './pages/LoginPage';
 import SetupPage from './pages/SetupPage';
 import PlanningPage from './pages/PlanningPage';
@@ -19,9 +19,9 @@ function App() {
       <Routes>
 
         <Route
-          path="/"
-          element={<Navigate to="/login" />}
-        />
+  path="/"
+  element={<InstructionsPage />}
+/>
 
         <Route
   path="/login"
@@ -32,46 +32,68 @@ function App() {
   }
 />
 
-        <Route
-          path="/setup"
-          element={
-            <SetupPage
-              game={game}
-              setGame={setGame}
-            />
-          }
+<Route
+  path="/setup"
+  element={
+    user
+      ? (
+        <SetupPage
+          game={game}
+          setGame={setGame}
         />
+      )
+      : <Navigate to="/" />
+  }
+/>
 
 <Route
   path="/planning"
   element={
-    <PlanningPage
-      game={game}
-      setGame={setGame}
-    />
+    user
+      ? (
+        <PlanningPage
+          game={game}
+          setGame={setGame}
+        />
+      )
+      : <Navigate to="/" />
   }
 />
 
-        <Route
+<Route
   path="/execution"
   element={
-    <ExecutionPage
-      game={game}
-    />
+    user
+      ? (
+        <ExecutionPage
+          game={game}
+        />
+      )
+      : <Navigate to="/" />
   }
 />
 
 <Route
   path="/result"
   element={
-<ResultPage user={user} />
+    user
+      ? (
+        <ResultPage
+          user={user}
+        />
+      )
+      : <Navigate to="/" />
   }
 />
 
-        <Route
-          path="/ranking"
-          element={<RankingPage />}
-        />
+<Route
+  path="/ranking"
+  element={
+    user
+      ? <RankingPage />
+      : <Navigate to="/" />
+  }
+/>
 
       </Routes>
 

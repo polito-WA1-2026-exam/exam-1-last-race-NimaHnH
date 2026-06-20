@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 function ExecutionPage({ game }) {
 
-  const [event, setEvent] = useState(null);
+  const [routeEvents, setRouteEvents] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -11,9 +11,6 @@ function ExecutionPage({ game }) {
     fetch('http://localhost:3001/api/events')
       .then(res => res.json())
       .then(events => {
-
-        const routeLength =
-          game.route?.length || 0;
 
         const badEvents =
           events.filter(
@@ -25,49 +22,60 @@ function ExecutionPage({ game }) {
             e => e.effect >= 0
           );
 
-        let selectedEvent;
+        const generatedEvents = [];
 
-        if (routeLength > 4) {
+        game.route?.forEach((segment, index) => {
 
-          const random = Math.random();
+          let selectedEvent;
 
-          if (random < 0.7) {
+          if (index >= 4) {
 
-            selectedEvent =
-              badEvents[
-                Math.floor(
-                  Math.random() *
-                  badEvents.length
-                )
-              ];
+            const random = Math.random();
+
+            if (random < 0.7) {
+
+              selectedEvent =
+                badEvents[
+                  Math.floor(
+                    Math.random() *
+                    badEvents.length
+                  )
+                ];
+
+            }
+            else {
+
+              selectedEvent =
+                goodEvents[
+                  Math.floor(
+                    Math.random() *
+                    goodEvents.length
+                  )
+                ];
+
+            }
 
           }
           else {
 
             selectedEvent =
-              goodEvents[
+              events[
                 Math.floor(
                   Math.random() *
-                  goodEvents.length
+                  events.length
                 )
               ];
 
           }
 
-        }
-        else {
+          generatedEvents.push({
+            segment,
+            event: selectedEvent
+          });
 
-          selectedEvent =
-            events[
-              Math.floor(
-                Math.random() *
-                events.length
-              )
-            ];
+        });
 
-        }
-
-        setEvent(selectedEvent);
+        setRouteEvents(generatedEvents);
 
       });
 
@@ -77,12 +85,19 @@ function ExecutionPage({ game }) {
     return <p>No game loaded</p>;
   }
 
-  if (!event) {
-    return <p>Loading event...</p>;
+  if (routeEvents.length === 0) {
+    return <p>Loading events...</p>;
   }
 
+  const totalEffect =
+    routeEvents.reduce(
+      (sum, item) =>
+        sum + item.event.effect,
+      0
+    );
+
   const finalCoins =
-    game.coins + event.effect;
+    game.coins + totalEffect;
 
   return (
     <div className="container mt-5">
@@ -117,15 +132,47 @@ function ExecutionPage({ game }) {
 
       <hr />
 
-      <h3>Random Event</h3>
+      <h3>Route Events</h3>
 
-      <p>
-        <b>{event.description}</b>
-      </p>
+      <table className="table table-bordered">
 
-      <p>
-        Effect: <b>{event.effect}</b>
-      </p>
+        <thead>
+
+          <tr>
+            <th>Segment</th>
+            <th>Event</th>
+            <th>Effect</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          {routeEvents.map((item, index) => (
+
+            <tr key={index}>
+
+              <td>
+                {item.segment.station1}
+                {' - '}
+                {item.segment.station2}
+              </td>
+
+              <td>
+                {item.event.description}
+              </td>
+
+              <td>
+                {item.event.effect}
+              </td>
+
+            </tr>
+
+          ))}
+
+        </tbody>
+
+      </table>
 
       <hr />
 
@@ -136,7 +183,15 @@ function ExecutionPage({ game }) {
       </p>
 
       <p>
-        Final: <b>{finalCoins}</b>
+        Total Event Effect:
+        {' '}
+        <b>{totalEffect}</b>
+      </p>
+
+      <p>
+        Final:
+        {' '}
+        <b>{finalCoins}</b>
       </p>
 
       <button
