@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import metroMap from '../assets/metro-map.png';
 
 function SetupPage({ game, setGame }) {
 
@@ -67,20 +68,17 @@ function SetupPage({ game, setGame }) {
 <hr />
 
 <h4>Metro Map</h4>
+<img
+  src={metroMap}
+  alt="Metro Map"
+  className="img-fluid"
+  style={{
+    maxWidth: '600px'
+  }}
+/>
 
-<pre style={{ fontSize: '18px' }}>
-Porta Nuova ---- Re Umberto ---- Politecnico ---- Dante
-      |
-Porta Susa ----------------------|
-      |
-Bernini ---- Rivoli ---- Massaua
 
-Politecnico ---- Lingotto
-                    ^
-                    |
-Dante ---- Carducci ---- Spezia
-</pre>
-      <hr />
+<hr />
 
       <h4>
         Memorize the map!
