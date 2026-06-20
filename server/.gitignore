@@ -1,0 +1,13 @@
+node_modules/
+.DS_Store
+Desktop.ini
+Thumbs.db
+
+server/node_modules/
+
+dist/
+build/
+
+*.sqlite
+*.db
+
