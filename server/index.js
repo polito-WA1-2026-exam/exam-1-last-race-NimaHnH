@@ -114,23 +114,22 @@ app.get('/api/game/new', async (req, res) => {
 
     const stations = await getRandomStations();
 
-    const validPairs = [
+  const validPairs = [
 
-      ['Porta Nuova', 'Dante'],
-      ['Porta Nuova', 'Massaua'],
-      ['Porta Nuova', 'Lingotto'],
+  ['Porta Nuova', 'Dante'],
+  ['Porta Nuova', 'Massaua'],
+  ['Porta Nuova', 'Lingotto'],
 
-      ['Re Umberto', 'Dante'],
-      ['Re Umberto', 'Lingotto'],
+  ['Re Umberto', 'Lingotto'],
 
-      ['Porta Susa', 'Massaua'],
-      ['Porta Susa', 'Lingotto'],
+  ['Porta Susa', 'Massaua'],
+  ['Porta Susa', 'Lingotto'],
 
-      ['Bernini', 'Massaua'],
+  ['Bernini', 'Lingotto'],
 
-      ['Dante', 'Lingotto']
+  ['Rivoli', 'Lingotto']
 
-    ];
+];
 
     const pair =
       validPairs[
