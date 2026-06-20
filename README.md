@@ -222,3 +222,12 @@ ChatGPT was used during development for:
 * Assisting with implementation details.
 
 All generated suggestions were reviewed, tested, and adapted before being integrated into the final project.
+
+
+## Screenshot
+
+### During a Game
+![Game](./img/game.png)
+
+### Ranking
+![Ranking](./img/ranking.png)
