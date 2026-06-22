@@ -1,5 +1,7 @@
 import db from './db.js';
+// Database query functions
 
+// Get a user by username
 export function getUser(username) {
 
   return new Promise((resolve, reject) => {
@@ -20,6 +22,7 @@ export function getUser(username) {
   });
 
 }
+// Return all metro stations
 export function getAllStations() {
   return new Promise((resolve, reject) => {
 
@@ -39,6 +42,7 @@ export function getAllStations() {
   });
 }
 
+// Return all segments
 export function getAllSegments() {
   return new Promise((resolve, reject) => {
 
@@ -58,6 +62,7 @@ export function getAllSegments() {
   });
 }
 
+// Get all stations used when creating a new game
 export function getRandomStations() {
 
   return new Promise((resolve, reject) => {
@@ -79,6 +84,7 @@ export function getRandomStations() {
 
 }
 
+// Return segments together with station names
 export function getSegmentsWithNames() {
 
   return new Promise((resolve, reject) => {
@@ -111,6 +117,7 @@ export function getSegmentsWithNames() {
 
 }
 
+// Return all available events
 export function getAllEvents() {
 
   return new Promise((resolve, reject) => {

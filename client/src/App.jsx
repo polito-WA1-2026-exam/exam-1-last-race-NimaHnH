@@ -9,8 +9,9 @@ import ResultPage from './pages/ResultPage';
 import RankingPage from './pages/RankingPage';
 
 function App() {
-
+  // Save game info
   const [game, setGame] = useState(null);
+  // Save logged-in user
   const [user, setUser] = useState(null);
 
   return (

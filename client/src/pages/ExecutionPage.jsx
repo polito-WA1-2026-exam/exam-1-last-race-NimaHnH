@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function ExecutionPage({ game }) {
-
+  //random event generated for each route segment
   const [routeEvents, setRouteEvents] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-
+    // Load all available events from the server
     fetch('http://localhost:3001/api/events')
       .then(res => res.json())
       .then(events => {
@@ -23,11 +23,11 @@ function ExecutionPage({ game }) {
           );
 
         const generatedEvents = [];
-
+        // Generate one event for each selected segment
         game.route?.forEach((segment, index) => {
 
           let selectedEvent;
-
+          // Long routes have a higher chance of negative events
           if (index >= 4) {
 
             const random = Math.random();
@@ -88,14 +88,14 @@ function ExecutionPage({ game }) {
   if (routeEvents.length === 0) {
     return <p>Loading events...</p>;
   }
-
+// Sum all event effects
   const totalEffect =
     routeEvents.reduce(
       (sum, item) =>
         sum + item.event.effect,
       0
     );
-
+// Calculate the final score after all events
   const finalCoins =
     game.coins + totalEffect;
 
@@ -197,7 +197,7 @@ function ExecutionPage({ game }) {
       <button
         className="btn btn-success mt-3"
         onClick={() => {
-
+          // Save the final score and move to the result page
           const updatedGame = {
             ...game,
             finalCoins

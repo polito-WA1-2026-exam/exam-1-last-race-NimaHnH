@@ -1,21 +1,21 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-
+// Displays the final result of the game
 function ResultPage({ user }) {
 
   const location = useLocation();
   const navigate = useNavigate();
-
+// Get game data passed from the previous page
   const game = location.state;
 
   if (!game) {
     return <p>No result available</p>;
   }
-
+// Negative scores are stored and shown as zero
   const finalScore =
     Math.max(0, game.finalCoins);
-
+// Save the final score in the database
   const saveResult = async () => {
-
+// Send score information to the server
     const response = await fetch(
       'http://localhost:3001/api/results',
       {

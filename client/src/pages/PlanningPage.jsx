@@ -4,19 +4,21 @@ import { useNavigate } from 'react-router-dom';
 function PlanningPage({ game, setGame }) {
 
   const navigate = useNavigate();
-
+  // All available metro segments
   const [segments, setSegments] = useState([]);
+  // Segments selected by the player
   const [selected, setSelected] = useState([]);
+  // 90-second planning timer
   const [timeLeft, setTimeLeft] = useState(90);
 
   useEffect(() => {
-
+    // Load all metro segments from the server
     fetch('http://localhost:3001/api/segments')
       .then(res => res.json())
       .then(data => setSegments(data));
 
   }, []);
-
+// Countdown during the planning phase (reverse))
   useEffect(() => {
 
     const timer = setInterval(() => {
@@ -53,7 +55,7 @@ function PlanningPage({ game, setGame }) {
   if (!game) {
     return <p>No game loaded</p>;
   }
-
+// Add or remove a segment from the selected route
   const toggleSegment = (segment) => {
 
     const exists =
@@ -76,7 +78,7 @@ function PlanningPage({ game, setGame }) {
     }
 
   };
-
+// Check Connection of Route
 function isConnectedRoute(
   route,
   startStation,
@@ -243,6 +245,8 @@ function isConnectedRoute(
 
             return;
           }
+
+// A valid route must contain at least 3 segments
 if (selected.length < 3) {
 
   alert(
@@ -252,6 +256,7 @@ if (selected.length < 3) {
   return;
 
 }
+          // Save the selected route
           setGame({
             ...game,
             route: selected

@@ -4,14 +4,14 @@ import { useNavigate } from 'react-router-dom';
 function LoginPage({ setUser }) {
 
   const navigate = useNavigate();
-
+  //form inputs
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
+  // Send login request to the server
   const handleLogin = async (event) => {
 
     event.preventDefault();
-
+    // Create a new authenticated session
     const response = await fetch(
       'http://localhost:3001/api/sessions',
       {
@@ -29,9 +29,9 @@ function LoginPage({ setUser }) {
     if (response.ok) {
 
       const user = await response.json();
-
+      // Save logged-in user information
       setUser(user);
-
+      // Move to the game setup page
       navigate('/setup');
 
     }

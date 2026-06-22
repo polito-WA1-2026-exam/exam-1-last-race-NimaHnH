@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import metroMap from '../assets/metro-map.png';
-
+// Setup phase of a new game
 function SetupPage({ game, setGame }) {
 
   const navigate = useNavigate();
 
  
-
+// Request a new game from the server
   useEffect(() => {
 
     if (!game) {
-
+// Load random start and destination stations
       fetch('http://localhost:3001/api/game/new')
         .then(res => res.json())
         .then(data => setGame(data));
@@ -20,7 +20,7 @@ function SetupPage({ game, setGame }) {
 
   }, [game, setGame]);
 
-
+// Wait until game data is available
   if (!game)
     return <p>Loading...</p>;
 

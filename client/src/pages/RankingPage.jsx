@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 
+// Displays the best scores of all players
 function RankingPage() {
-
+//Ranking data received from the server
   const [scores, setScores] = useState([]);
 
   useEffect(() => {
-
+// Load ranking information
     fetch('http://localhost:3001/api/ranking')
       .then(res => res.json())
       .then(data => setScores(data));

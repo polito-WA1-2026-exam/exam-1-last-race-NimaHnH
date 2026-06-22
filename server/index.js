@@ -14,9 +14,11 @@ import passport from './passport.js';
 const app = express();
 const port = 3001;
 
+// Middleware configuration
 app.use(cors());
 app.use(express.json());
 
+// Session management
 app.use(
   session({
     secret: 'last-race-secret',
@@ -25,6 +27,7 @@ app.use(
   })
 );
 
+// Create a new authenticated session
 app.post(
   '/api/sessions',
   passport.authenticate('local'),
@@ -35,6 +38,7 @@ app.post(
   }
 );
 
+// Return the currently logged-in user
 app.get('/api/sessions/current', (req, res) => {
 
   if (req.isAuthenticated()) {
@@ -47,7 +51,7 @@ app.get('/api/sessions/current', (req, res) => {
 
 });
 
-
+// Destroy the current session
 app.delete('/api/sessions/current', (req, res) => {
 
   req.logout(() => {
@@ -56,9 +60,11 @@ app.delete('/api/sessions/current', (req, res) => {
 
 });
 
+// Enable Passport authentication
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Return all metro stations
 app.get('/api/network', async (req, res) => {
 
   try {
@@ -75,6 +81,7 @@ app.get('/api/network', async (req, res) => {
 
 });
 
+// Return all metro segments with station names
 app.get('/api/segments', async (req, res) => {
 
   try {
@@ -92,6 +99,7 @@ app.get('/api/segments', async (req, res) => {
 
 });
 
+// Return all available game events
 app.get('/api/events', async (req, res) => {
 
   try {
@@ -108,12 +116,14 @@ app.get('/api/events', async (req, res) => {
 
 });
 
+// Create a new game with random start and destination stations
 app.get('/api/game/new', async (req, res) => {
 
   try {
 
     const stations = await getRandomStations();
 
+// Valid station pairs with at least 3 segments distance
   const validPairs = [
 
   ['Porta Nuova', 'Dante'],
@@ -162,6 +172,7 @@ app.get('/api/game/new', async (req, res) => {
 
 });
 
+// Return one random event
 app.get('/api/event/random', async (req, res) => {
 
   try {
@@ -181,6 +192,7 @@ app.get('/api/event/random', async (req, res) => {
 
 });
 
+// Save or update a player's best score
 app.post('/api/results', (req, res) => {
 
   const {
@@ -188,6 +200,7 @@ app.post('/api/results', (req, res) => {
     score
   } = req.body;
 
+  // Check whether the user already has a saved score
   db.get(
     `
     SELECT score
@@ -204,7 +217,8 @@ app.post('/api/results', (req, res) => {
       if (row) {
 
         if (score > row.score) {
-
+          
+          // Update the score only if it is better
           db.run(
             `
             UPDATE games
@@ -236,7 +250,7 @@ app.post('/api/results', (req, res) => {
 
       }
       else {
-
+        // Update the score only if it is better
         db.run(
           `
           INSERT INTO games(
@@ -266,6 +280,7 @@ app.post('/api/results', (req, res) => {
 
 });
 
+// Return ranking ordered by score
 app.get('/api/ranking', (req, res) => {
 
   db.all(
@@ -288,6 +303,7 @@ ORDER BY score DESC
 
 });
 
+// Start the server
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
 });

@@ -1,6 +1,8 @@
 import db from './db/db.js';
 import bcrypt from 'bcrypt';
+// Populate the database with initial data
 
+// Execute database operations sequentially
 db.serialize(() => {
 
   // stations
@@ -19,6 +21,7 @@ db.serialize(() => {
     'Spezia'
   ];
 
+  // Insert all stations
   stations.forEach(s => {
     db.run(
       'INSERT INTO stations(name) VALUES(?)',
@@ -34,6 +37,7 @@ db.serialize(() => {
     'Yellow Line'
   ];
 
+// Insert metro lines
   lines.forEach(l => {
     db.run(
       'INSERT INTO lines(name) VALUES(?)',
@@ -67,6 +71,7 @@ db.serialize(() => {
 
   ];
 
+// Insert connections between stations
   segments.forEach(s => {
     db.run(
       `
@@ -93,6 +98,7 @@ db.serialize(() => {
     ['Lucky Day', 4]
   ];
 
+  // Insert random game events
   events.forEach(e => {
     db.run(
       'INSERT INTO events(description,effect) VALUES(?,?)',
@@ -100,15 +106,17 @@ db.serialize(() => {
     );
   });
 
+  // Demo users for login
   const users = [
     'nima',
     'mario',
     'luca'
   ];
 
+  // Create all users in the database
   Promise.all(
     users.map(async (username) => {
-
+      // Hash the password before saving 
       const hash =
         await bcrypt.hash('1234', 10);
 

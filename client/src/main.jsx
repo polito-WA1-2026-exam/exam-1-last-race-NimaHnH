@@ -6,7 +6,10 @@ import './index.css'
 
 import App from './App.jsx'
 
+// Render the main React application
 createRoot(document.getElementById('root')).render(
+  
+    // Enable additional React checks during development
   <StrictMode>
     <App />
   </StrictMode>,
